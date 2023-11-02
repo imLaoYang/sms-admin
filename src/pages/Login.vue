@@ -6,7 +6,7 @@
 				<!-- 登录框 -->
 				<div class="login-frame">
 					<div class="ms-title">
-						<img src="@/assets/Login/title.png" alt="" />
+						<!-- <img src="@/assets/Login/title.png" alt="" /> -->短信调度平台
 					</div>
 					<m-form :formData="ruleForm" :columns="formColumns" ref="ruleForm" @keyup.enter.native="submitForm"
 						size="medium" />
@@ -127,7 +127,8 @@ export default class Login extends Vue {
 
 				// border: 1px dashed #ccc;
 				.ms-title {
-					font-size: 50px;
+					font-size: 40px;
+					font-family: '';
 					font-family:Verdana, Geneva, Tahoma, sans-serif;
 					margin-top: 18px;
 					margin-bottom: 37px;

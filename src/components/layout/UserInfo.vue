@@ -84,8 +84,8 @@ export default class UserInfo extends Vue {
     // this.$store.commit('updateToken', '')
 	}
 
+	// 退出登录
 	clearToken () {
-    // TODO
 	axios.get('development/user/logout',{
 		headers: {
 			token: localStorage.getItem('token')

@@ -4,7 +4,7 @@
       <m-form :formData="formData" :columns="formColumns" ref="mform" />
       <div slot="footer" style="text-align:center;">
         <el-button @click="closeDialog" style="margin-right:30px;padding: 10px 20px;">取消</el-button>
-        <el-button type="primary" style="margin-bottom:20px;padding: 10px 20px;" @click="updatePassWord">确认</el-button>
+        <el-button type="primary" style="margin-bottom:20px;padding: 10px 20px;" v-model="formData" @click="updatePassWord">确认</el-button>
       </div>
     </el-dialog>
     <!-- 修改成功弹框 -->
@@ -24,14 +24,15 @@ import ChangePassSuccInfo from './ChangePassSuccInfo.vue'
   }
 })
 export default class ChangePassword extends Vue {
-  private formData = {
+   formData = {
     oldPaw: '',
     newPaw: '',
-    confirmNewPaw: ''
+    confirmNewPaw: '',
+    userName: this.$store.state.userInfo.userName
   } as any
 
-  private changeSuccContent = '修改成功'
-  private dialogChangeShow = false
+   changeSuccContent = '修改成功'
+   dialogChangeShow = false
 
   @Prop([String]) title!: string
   @Prop([Boolean]) dialogShow!: boolean
@@ -128,15 +129,27 @@ export default class ChangePassword extends Vue {
   }
 
   updatePassWord () {
-    this.$refs.mform.validate().then((value: boolean) => {
-      if (value) {
-        // TODO
+     
+    // 改密码
+    this.$api.updatepwd(this.formData).then(res =>{
+      if(res){
+        this.$store.commit('updateLogout', false)
         this.dialogChangeShow = true
         this.$emit('closeDialog')
-        this.$store.commit('updateLogout', false)
         this.resetForm()
       }
     })
+
+
+    // this.$refs.mform.validate().then((value: boolean) => {
+    //   if (value) {
+    //     // TODO
+    //     this.$store.commit('updateLogout', false)
+    //     this.dialogChangeShow = true
+    //     this.$emit('closeDialog')
+    //     this.resetForm()
+    //   }
+    // })
   }
 }
 </script>

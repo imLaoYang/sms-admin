@@ -12,6 +12,12 @@ export class Api {
   login!: Method
 
   /**
+   * 修改密码
+   */
+  @createApi({ url: baseUrl + '/user/updatepwd' ,method:'post'})
+  updatepwd!: Method
+
+  /**
    * 退出登录
    */
   @createApi({url: baseUrl + '/user/logout',method:'get'})
