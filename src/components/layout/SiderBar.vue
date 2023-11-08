@@ -98,13 +98,13 @@ export default {
   // z-index: 9;
   }
   .logoTitle {
-    margin-top:27px;
-    margin-bottom:34px;
+    // margin-top:27px;
+    // margin-bottom:34px;
     img {
-      width:61px;
-      height:73px;
+      width:150px;
+      height:100px;
       text-align:center;
-      margin-left:50px;
+      // margin-left:50px;
       cursor: pointer;
     }
   }

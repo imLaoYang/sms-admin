@@ -57,7 +57,7 @@ export default class SignOrTemRelateDialog extends Vue {
           prop: this.diaFormData.title === '签名' ? 'configSignatureCode' : 'configTemplateCode',
           span: 22,
           el: 'input',
-          placeholder: '例如：第三方通道的签名id或内容，没有固定规则',
+          placeholder: '例如：第三方通道的签名CODE或模板CODE',
           type: 'textarea'
         }
       ] : []),

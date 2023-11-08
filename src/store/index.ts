@@ -100,8 +100,7 @@ export default new Vuex.Store<RootState>({
           if (initRoute) {
             router.push(initRoute)
           } else {
-            console.log(111);
-            // router.push({ name: 'mian' })
+            router.push('/')
           }
           commit('updateIntRoute')
         } else {

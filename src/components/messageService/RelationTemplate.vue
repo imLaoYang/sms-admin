@@ -23,7 +23,7 @@
               <span class="name-label">{{ item.name }}</span>
             </p>
             <p>
-              <span class="name-label">其他配置：</span>
+              <span class="name-label">CODE：</span>
               <span class="name-label">{{ item.configTemplateCode }}</span>
             </p>
           </div>

@@ -25,7 +25,7 @@ interface ArrValue {
 export default class SendRecord extends Vue {
   
   private formData = {
-    arrDate: this.$route.query.sendRecordParams ? this.$route.query.sendRecordParams : null,
+    arrDate: this.$route.query.sendRecordParams ? this.$route.query.sendRecordParams : '2023',
     status: this.$route.query.sendRecordParams ? 0 : ''
   } as any
 
