@@ -1,4 +1,4 @@
-# 微信管理客户端
+# 短信管理客户端
 
 ## 技术架构
 
@@ -6,7 +6,6 @@ vue2 + ts + spa
 
 ## 对外访问
 
-https://sms.ydlclass.com
 
 ## Project setup
 
