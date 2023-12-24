@@ -32,7 +32,7 @@ module.exports = {
       obj['element-ui'] = 'ELEMENT'
     }
     config
-    .externals(obj)
+      .externals(obj)
     // .plugin('process-env')
     // .tap(args => {
     //   return args

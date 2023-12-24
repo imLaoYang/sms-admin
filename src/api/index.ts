@@ -8,20 +8,46 @@ export class Api {
   /** 
    * 登录
   */
-  @createApi({ url: baseUrl + '/user/login' ,method:'post'})
+  @createApi({ url: baseUrl + '/user/login', method: 'post' })
   login!: Method
 
   /**
    * 修改密码
    */
-  @createApi({ url: baseUrl + '/user/updatepwd' ,method:'post'})
+  @createApi({ url: baseUrl + '/user/updatepwd', method: 'post' })
   updatepwd!: Method
 
   /**
    * 退出登录
    */
-  @createApi({url: baseUrl + '/user/logout',method:'get'})
+  @createApi({ url: baseUrl + '/user/logout', method: 'get' })
   logout!: Method
+
+  /**
+   * 添加用户
+   */
+  @createApi({ url: baseUrl + '/user/addUser', method: 'post' })
+  addUser!: Method
+
+
+  /**
+   * 修改用户
+   */
+  @createApi({ url: baseUrl + '/user/alterUser', method: 'put' })
+  alterUser!: Method
+
+  /**
+   * 删除用户
+   */
+  @createApi({ url: baseUrl + '/user/deleteUser', method: 'delete' })
+  delteUser!: Method
+
+
+   /**
+   * 获取用户
+   */
+   @createApi({ url: baseUrl + '/user/list', method: 'get' })
+   userList!: Method
 
   /**
    * 统计部分-发送量趋势
@@ -34,7 +60,7 @@ export class Api {
    */
   @createApi({ url: baseUrl + '/statistics/count', method: 'get' })
   getStatisticsCount!: Method
-  
+
   /**
    * 统计部分-应用发送数量TOP10
    */
@@ -59,7 +85,7 @@ export class Api {
   @createApi({ url: baseUrl + '/statistics/marketingTrend', method: 'get' })
   getStatisticsMarketingTrend!: Method
 
-  
+
   /**
    * 短信服务-签名管理-card列表页获取
    */
@@ -131,7 +157,7 @@ export class Api {
    */
   @createApi({ url: baseUrl + '/config', method: 'delete' })
   deleteConfig!: Method
-  
+
   /**
    * 短信服务-通道管理-card列表页排序
    */
@@ -190,7 +216,7 @@ export class Api {
    */
   @createApi({ url: baseUrl + '/platform', method: 'get' })
   getPlatform!: Method
-  
+
   /**
    * 短信服务-服务日志-接收日志
    */

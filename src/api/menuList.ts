@@ -58,6 +58,8 @@ export const menuList = () => {
           menuUrl: "/messageService/ServiceLog",
           parentId: 248
         }
+
+
         
       ],
       isRoute: "0",
@@ -132,6 +134,17 @@ export const menuList = () => {
           menuUrl: "/systemManage/BlacklistManage",
           parentId: 248
         },
+
+        {
+          childMenuInfos: [],
+          component: "/systemManage/UserManage",
+          icon: "",
+          isRoute: "1",
+          menuId: 259,
+          menuName: "用户管理",
+          menuUrl: "/systemManage/UserManage",
+          parentId: 249
+        }
         // {
         //   childMenuInfos: [],
         //   component: "/billing/customerManage/FlowManage",

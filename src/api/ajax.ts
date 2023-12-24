@@ -128,7 +128,12 @@ instance.interceptors.response.use(response => {
   }
 }, error => {
   if (error.config && error.config.hideLoading) error.config.hideLoading() 
-  Message.error(error.response.data.msg)
+  if(error.response.data.msg){
+
+    Message.error(error.response.data.msg)
+  }else{
+    Message.error('系统错误')
+  }
   return Promise.reject(error)
 })
 

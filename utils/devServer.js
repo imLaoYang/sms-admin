@@ -2,17 +2,15 @@
 const request = require('request')
 
 const urls = {
+	// development: 'http://192.168.214.137:8770',
 	development: 'http://localhost:8770',
-	// development: 'http://172.16.43.16:8770',
-	test: 'http://161.189.19.206:8770',
-	preissue: 'http://161.189.19.206:8770',
-	production: 'http://161.189.19.206:8770'
+	production: 'http://192.168.214.137:8770'
 }
 
 const poxy = Object.entries(urls).reduce((obj, [key, target]) => {
 	obj[`/${key}`] = {
 		target,
-		changeOrigin: true,
+		compress: true,
 		pathRewrite: {
 			[`^/${key}/services`]: '/services',
 			[`^/${key}/files`]: '/files',

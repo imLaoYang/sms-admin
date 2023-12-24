@@ -1,45 +1,46 @@
 <template>
-  <div class="sign-message">
-    <div class="search">
-      <m-form :formData="formData" :columns="formColumns" />
-    </div>
+  <div class="user-manage">
+
     <div class="list">
-      <el-button type="primary" @click="addSign('add')" style="margin-right: 26px;">
+      <el-button type="primary" @click="addUser('add')" style="margin-right: 26px;">
         <i class="el-icon-circle-plus-outline icon-sign"></i>
-        添加签名
+        添加用户
       </el-button>
-      <el-button @click="deleteSignIds" :disabled="ids.length === 0" class="delete">
+
+      <el-button @click="deleteUserIds" :disabled="ids.length === 0" class="delete">
         <i class="el-icon-delete icon-sign"></i>
         批量删除
       </el-button>
     </div>
 
-    <div class="data-list" v-if="cardLiStData.length > 0">
-      <el-card class="box-card" v-for="(item, index) of cardLiStData" :key="index">
+
+
+    <div class="data-list" v-if="userList.length > 0">
+      <el-card class="box-card" v-for="(item, index) of userList" :key="index">
         <div class="card">
-          <el-checkbox v-model="item.choseCheck" class="checkbox-style" @change="getSignIds(item, $event)"></el-checkbox>
+          <el-checkbox v-model="item.choseCheck" class="checkbox-style" @change="getUserIds(item, $event)"></el-checkbox>
           <div class="card-word">
-            <span class="word-text">{{ item.code }}</span>
-            <span class="card-img edit" @click="addSign('edit', item)">
-              <el-tooltip class="item" effect="dark" content="点击修改签名模板" placement="top">
-                <img src="@/assets/messageService/edit.png" alt="" />
+            <span class="word-text">{{ item.userName }}</span>
+            <span class="card-img edit" @click="addUser('edit', item)">
+              <el-tooltip class="item" effect="dark" content="点击修改用户数据" placement="top">
+                <img style="transform: scale(1.3);" src="@/assets/messageService/edit.png" alt="" />
               </el-tooltip>
             </span>
-            <span class="card-img juli" @click="deleteSign(item)">
-              <el-tooltip class="item" effect="dark" content="点击删除当前签名模板" placement="top">
-                <img src="@/assets/messageService/delete.png" alt="" />
+            <span class="card-img juli" @click="deleUser(item)">
+              <el-tooltip class="item" effect="dark" content="点击删除当前用户" placement="top">
+                <img style="transform: scale(1.3);" src="@/assets/messageService/delete.png" alt="" />
               </el-tooltip>
             </span>
           </div>
-          
+
           <div class="name-date">
             <p>
-              <span class="name-label">签名名称：</span>
-              <span class="name-label">{{ item.name }}</span>
+              <span class="name-label">昵称：</span>
+              <span class="name-label">{{ item.nickName }}</span>
             </p>
             <p>
-              <span class="name-label">创建时间：</span>
-              <span class="name-label">{{ item.createTime }}</span>
+              <span class="name-label">状态：</span>
+              <span class="name-label">{{ item.status === '1' ? '正常' : "停用" }}</span>
             </p>
           </div>
         </div>
@@ -48,184 +49,130 @@
     </div>
 
 
-
-    <!-- TODO 暂无数据处理-->
-    <!-- <div v-else class="no-data">
-      <div>
-        <img src="@/assets/messageService/no-data.png" alt="" />
-        <p>这里什么都没有哦～</p>
-      </div>
-    </div> -->
-    <div class="paging" v-if="pageInfo.total > 16">
-      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
-        :page-size="pageInfo.size" layout="total, prev, pager, next, jumper" :total="pageInfo.total">
-      </el-pagination>
-    </div>
     <!-- 新增和修改 -->
-    <MessageListDialog :dialogShow="dialogShow" @closeDialog="closeDialog" :title="DiaTile" :diaFormData="signFormData" />
+    <UserManageDialog :dialogShow="dialogShow" @closeDialog="closeDialog" :title="DiaTile" :diaFormData="userList" />
     <!-- 删除动作 -->
     <el-dialog :visible.sync="centerDialogVisible" width="322px" center :show-close="false" top="22vh" class="dia-sign">
       <span class="diaLog-span" style="text-align:center;">确认删除?</span>
       <span slot="footer" class="dialog-footer">
         <el-button @click="centerDialogVisible = false" class="btn-sty">取 消</el-button>
-        <el-button type="primary" @click="deteleSignDialog" style="padding: 10px 20px;">确 定</el-button>
+        <el-button type="primary" @click="deteleUserDialog" style="padding: 10px 20px;">确 定</el-button>
       </span>
     </el-dialog>
   </div>
 </template>
-
+ 
 <script lang="tsx">
 import { Component, Vue } from 'vue-property-decorator'
-import MessageListDialog from '@/components/messageService/MessageListDialog.vue'
+import UserManageDialog from '@/components/systemManage/UserManageDialog.vue'
 
 @Component({
   components: {
-    MessageListDialog
+    UserManageDialog
   }
 })
-export default class SignManage extends Vue {
-  private formData = {} as any
-  private currentPage = 0
-  private checked = false
+
+export default class UserManage extends Vue {
+
   private dialogShow = false
-  private DiaTile = '添加签名'
+  private DiaTile = '添加用户'
+  private userList = {} as any
   private ids: Array<number> = []
   private centerDialogVisible = false
-  private signFormData = {} as any
   private pageInfo = {
     current: 1,
     total: 0,
     size: 16
   }
-  private cardLiStData = [] as any
 
-  get formColumns() {
-    return [
-      {
-        label: '签名编号：',
-        prop: 'code',
-        placeholder: '请输入',
-        el: 'input',
-        labelWidth: '120px',
-        labelPosition: 'left',
-        span: 6
-      },
-      {
-        label: '签名名称：',
-        prop: 'name',
-        placeholder: '请输入',
-        el: 'input',
-        labelWidth: '120px',
-        span: 6
-      },
-      {
-        span: 6,
-        prop: 'btn',
-        render: () => {
-          return <div>
-            <el-button type="primary" icon="el-icon-search" onClick={this.getList} style="margin-left: 34px;margin-right: 17px;">搜索</el-button>
-            <el-button icon="el-icon-edit" onClick={this.resetFun}>重置</el-button>
-          </div>
-        }
-      }
-    ]
-  }
 
+
+  // 创建时调用
   created() {
-    this.getList()
+    this.getUser()
   }
 
-  getList() {
+  // 获取用户
+  async getUser() {
     const { current, size } = this.pageInfo
     const params = {
       current,
-      size,
-      code: this.formData.code,
-      name: this.formData.name
+      size
     }
-
-    this.$api.getSignaturePage(params).then(res => {
-
+    this.$api.userList(params).then(res => {
       if (res && res.records) {
-        this.cardLiStData = res.records.map((obj: any) => ({ choseCheck: false, ...obj }))
+        this.userList = res.records.map((obj: any) => ({ choseCheck: false, ...obj }))
         this.pageInfo.total = Number(res.total)
-        this.resetFun()
       }
     })
   }
 
-  resetFun() {
-    this.formData = {}
-  }
+ 
 
-  handleSizeChange(val: any) {
-    this.pageInfo.size = val
-  }
-
-  handleCurrentChange(val: any) {
-    this.pageInfo.current = val
-    this.getList()
-  }
-
-  addSign(type: string, item?: any) {
-    this.signFormData = {}
-    this.DiaTile = type === 'add' ? '添加签名' : '修改签名'
+  // 添加用户
+  addUser(type: string, item?: any) {
+    this.userList = {}
+    this.DiaTile = type === 'add' ? '添加用户' : '修改用户'
     this.dialogShow = true
-    this.signFormData = {
+    this.userList = {
       ...(item || {})
     }
+   this.getUser()
   }
 
-  deleteSignIds() {
-    if (this.ids.length === 0) {
-      this.$message.error('请勾选要删除的签名')
-    } else {
-      this.centerDialogVisible = true
-    }
-  }
 
-  getSignIds() {
-    this.ids = this.cardLiStData.filter((obj: any) => {
+  getUserIds() {
+    this.ids = this.userList.filter((obj: any) => {
       return obj.choseCheck === true
     }).map((item: any) => (item.id))
   }
 
-  deleteSign(item: any) {
+  // 删除用户
+  deleUser(item: any) {
     this.ids = []
     this.centerDialogVisible = true
     this.ids.push(item.id)
+    
   }
 
-  deteleSignDialog() {
-    const params = [...this.ids]
-    this.$api.deleteSignature(params).then(res => {
+  // 批量删
+  deleteUserIds() {
+    if (this.ids.length === 0) {
+      this.$message.error('请勾选要删除的用户')
+    } else {
+      this.centerDialogVisible = true
+    } 
+  }
 
-      if (res && res.length <= 0) {
+  deteleUserDialog() {
+    const params = [...this.ids]
+    this.$api.delteUser(params).then(res => {
+
+      if (res) {
         this.centerDialogVisible = false
         this.$message.success('删除成功')
-        this.getList()
-        this.ids = []
-      } else {
-        this.centerDialogVisible = false
-        this.$message.warning(`${res.join(',')}已使用，无法删除`)
-        this.getList()
+        this.getUser()
         this.ids = []
       }
-
+  
     })
   }
 
+
   closeDialog() {
-    this.dialogShow = false
-    this.getList()
+    this.dialogShow = false;
+    this.getUser()
   }
+
+
+
+
+
 }
 </script>
-
-
-
+ 
 <style lang="scss" scoped>
-.sign-message {
+.user-manage {
   width: 100%;
   height: 100%;
   position: relative;

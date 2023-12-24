@@ -46,7 +46,7 @@ export default class Login extends Vue {
 					required: true,
 					trigger: 'blur',
 					validator: (rule: any, value: string, callback: Function) => {
-						if (value === '') {
+						if (!value) {
 							callback(new Error('请输入用户名'))
 						} else {
 							callback()

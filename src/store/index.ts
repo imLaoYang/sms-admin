@@ -41,7 +41,7 @@ export default new Vuex.Store<RootState>({
     initRoute: sessionStorage.initRoute ? JSON.parse(sessionStorage.initRoute) : null,
     systemInfo: null,
     userInfo: {
-      avatar: 'http://wx.qlogo.cn/mmopen/lXNWN5frM2yZXrrQrPw8EbnTPn6YZhCAjcJ2libFqquFCbdlV8IQA1oVC5q8bw734BgbvoePD8YPfvoyloDAt2iaRt3YQOFtJ3/64',
+      avatar: '/img/icons/avatar.jpg',
       userName: '',
       isLogin: false
     },
