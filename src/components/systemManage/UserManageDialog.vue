@@ -30,6 +30,28 @@ export default class UserManageDialog extends Vue {
 
   get formColumns() {
     return [
+      
+    {
+        label: '用户类型：',
+        prop: 'userType',
+        el: 'radio-group',
+        span: 22,
+        list: [
+          {
+            label: '管理员',
+            value: '1'
+          },
+          {
+            label: '普通用户',
+            value: '2'
+          }
+        ],
+        rules: {
+          required: true,
+          trigger: 'change',
+          message: '请勾选用户类型'
+        }
+      },
       {
         label: '用户名：',
         prop: 'userName',

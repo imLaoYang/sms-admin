@@ -12,9 +12,6 @@ import api from '@/api'
 import Toast from '@/components/common/toast/index.js'
 // 进度条
 import NProgress from 'nprogress'
-// import Cookies from 'js-cookie'
-
-
 Vue.config.productionTip = false
 Vue.prototype.$api = api
 
@@ -41,7 +38,6 @@ router.beforeEach((to, from, next) => {
 router.afterEach(() => {
   // NProgress.done()
 })
-
 
 new Vue({
   router,

@@ -114,9 +114,11 @@ export const getLastMonthStartDateAndEndDate = () => {
   const nowDay = now.getDate()
   //当前月
   const nowMonth = now.getMonth()
+   
   //当前年
   let nowYear = now.getFullYear()
-  nowYear += (nowYear < 2000) ? 1900 : 0
+  if (nowMonth === 0) nowYear--
+  nowYear += (nowYear < 2000) ? 1900 : 0 
   //上月日期
   const lastMonthDate = new Date()
   lastMonthDate.setDate(1)
